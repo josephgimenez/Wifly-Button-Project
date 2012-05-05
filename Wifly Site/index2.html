@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<HTML>
+	<HEAD>
+		<TITLE> Unit Sales Calculator! </TITLE>
+		<SCRIPT type="text/javascript" src="jquery-1.4.4.min.js"></SCRIPT>
+
+		<STYLE type="text/css">
+
+			.numberDisplay
+			{
+				background-image: -webkit-gradient(
+					linear,
+					left bottom,
+					left top,
+					color-stop(0.25, rgb(158,162,168)),
+					color-stop(0.63, rgb(201,204,214)),
+					color-stop(0.82, rgb(162,188,189))
+				);
+				background-image: -moz-linear-gradient(
+					center bottom,
+					rgb(158,162,168) 25%,
+					rgb(201,204,214) 63%,
+					rgb(162,188,189) 82%
+				);
+							
+				text-align: center; 
+				background-color: #88888A; 
+				text-shadow: 8px 8px 8px #000;
+				/*border-radius: 28px; */
+			}
+
+
+			BODY {
+				font-family: calibri; 
+				font-size: 20em;
+				font-weight: bold;
+				margin-top: 10%;
+				margin-bottom: 25%;
+				background-color: #00469b;
+				color: #FFFFFF;
+				/*color: #00469b;*/
+			}
+
+		</STYLE>
+	</HEAD>
+
+	<BODY>
+
+		<!-- HTML5 audio tag - loads spin8.wav from current directory
+		<audio autoplay="autoplay">
+			<source src="spin8.wav" />
+			</audio> -->
+
+		<!-- Create div tag with individual SPAN tags for each digit in number -->
+		<DIV style="text-align: center"> 
+			<SPAN style="background-color: lightgray; text-align: center; padding: 1.5%">
+			<SPAN class="numberDisplay" id="num1" style="border-left-color: gray; border-right-color: gray; border-top-color: gray; border-bottom-color: gray; border-left-style: solid; border-width: 14px; border-bottom-style: solid; border-bottom-width: 14px; border-top-style: solid; border-top-width: 14px; border-right-style: solid; border-right-width: 7px; padding: 20px; margin: -38px;">0</SPAN> 
+			<SPAN class="numberDisplay" id="num2" style="border-left-style: solid; border-right-color: gray; border-top-color: gray; border-bottom-color: gray; border-left-width: 7px; border-bottom-style: solid; border-bottom-width: 14px; border-top-style: solid; border-top-width: 14px; border-right-style: solid; border-right-width: 7px; padding: 20px; margin: -38px;">0</SPAN> 
+			<SPAN style="background-color: lightgray">
+			<SPAN class="numberDisplay" id="num3" style="border-left-style: solid; border-right-color: gray; border-top-color: gray; border-bottom-color: gray; border-left-width: 7px; border-bottom-style: solid; border-bottom-width: 14px; border-top-style: solid; border-top-width: 14px; border-right-style: solid; border-right-width: 7px; padding: 20px; margin: -38px;">0</SPAN> 
+			<SPAN class="numberDisplay" id="num4" style="border-right-color: gray; border-left-color: #FFFFFF; border-left-style: solid; border-top-color: gray; border-bottom-color: gray; border-left-width: 7px; border-bottom-style: solid; border-bottom-width: 14px; border-top-style: solid; border-top-width: 14px; border-right-width: 14px; border-right-style: solid; padding: 20px; margin: -38px;">0</SPAN>
+
+		</DIV>
+
+		<!-- Placeholder audio tag for 'tada sound' which is accessed via javascript at the bottom -->
+		<audio id="soundHandle" style="display: none;"></audio>
+
+		<script>
+
+			var finalValue = "0125";
+
+			var numArray = new Array(3);
+			numArray = finalValue.split("");
+
+			var counter = 50;
+
+			var numCtr = 9;
+			var ctrArray = new Array(10);
+
+			ctrArray[0] = "0";
+			ctrArray[1] = "1";
+			ctrArray[2] = "2";
+			ctrArray[3] = "3";
+			ctrArray[4] = "4";
+			ctrArray[5] = "5";
+			ctrArray[6] = "6";
+			ctrArray[7] = "7";
+			ctrArray[8] = "8";
+			ctrArray[9] = "9";
+
+			var strRand = "";
+
+			var numPosArray = new Array(4);
+
+			numPosArray[0] = "#num1";
+			numPosArray[1] = "#num2";
+			numPosArray[2] = "#num3";
+			numPosArray[3] = "#num4";
+
+			var posSel = 3;
+
+			// runs function (function()) every xyz millisecs until interval is cleared
+			var intervalHandle = setInterval("generateValues()", 80);
+
+
+			function generateValues() 
+			{
+				// decrement counter
+				counter--;
+
+				// reset random number generated to 0
+				numRand = 0;
+
+				$(numPosArray[posSel]).text(ctrArray[numCtr]);
+
+				if (numCtr == 0)
+				{
+					numCtr = 9;
+				}
+				else
+				{
+					numCtr--;
+				}
+
+				// if we've hit (n) number of loop iterations, stop the loop and show the final value
+				if (counter <= 0)
+				{
+					counter = 50;
+					clearInterval(intervalHandle);
+					finalizeValue();
+					intervalHandle = setInterval("generateValues()", 80);
+				}
+			}
+
+			function finalizeValue()
+			{
+				$(numPosArray[posSel]).text(numArray[posSel]);
+				posSel -= 1;
+				// access audio element with id soundHandle
+				// and play tada sound
+				//soundHandle = document.getElementById('soundHandle');
+				//soundHandle.src = 'tada.wav';
+				//soundHandle.play();
+			}
+
+		</SCRIPT>
+	</BODY>
+</HTML>
+
+
+

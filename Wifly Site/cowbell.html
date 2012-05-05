@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<HTML>
+	<HEAD>
+		<META http-equiv="refresh" content="6.2; url=file:///Users/codebx/Desktop/WiflySite/index.html">
+		<TITLE> Unit Sales Calculator! </TITLE>
+		<SCRIPT type="text/javascript" src="jquery-1.4.4.min.js"> </SCRIPT>
+		<SCRIPT type="text/javascript">
+			//var intervalHandle = setInterval("textFlow()", 200);
+			
+			$(document).ready(function() {
+				$('#prescription').hide();
+				$('#cowbell').hide();
+				$('#fever').animate({'left':'10'}, 2000);
+				$('#prescription').show().delay(1000);
+				$('#prescription').animate({'left':'400'}, 2000);
+				$('#cowbell').show().delay(2500);
+				$('#cowbell').animate({'left':'1000'}, 2000);
+				$('#logo').show().delay(5000);
+				//$('#logo').animate({'height':'300','width':'300'}, 1000);
+				//$('#logo').animate({'height':'250','width':'800'}, 1000);
+
+
+			});
+		</SCRIPT>
+		<STYLE type="text/css">
+
+			BODY {
+				font-family: calibri; 
+				font-size: 30pt;
+				font-weight: bold;
+				/*margin-top: 10%;*/
+				/*margin-bottom: 15%;*/
+				background-color: #FFFFFF;
+				color: #00469b;
+				/*background-image:url('logo2.jpg');
+				background-repeat:no-repeat;
+				background-attachment:fixed;
+				background-position:center;*/
+			}
+
+		</STYLE>
+	</HEAD>
+
+	<BODY>
+
+		<P id="fever" style="position: relative; left: 1000px"> I've got a fever... </P>
+		<P id="prescription" style="position: relative; left: 10px"> And the only prescription.. </P>
+		<P id="cowbell" style="position: relative; left: 10px"> is more cowbell! </P>
+		<!-- play the "I got a fever / cowbells" audio clip -->
+		<audio autoplay="autoplay">  
+			<source src="igottafever.wav" type="audio/mpeg"/>  
+		</audio>  
+		<DIV style="text-align: center"><img id="logo" style="position: relative" src="logo2.jpg" width="75%"></DIV>
+
+	</BODY>
+</HTML>

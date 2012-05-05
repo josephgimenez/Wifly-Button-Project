@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<HTML>
+	<HEAD>
+		<!-- 
+		<META http-equiv="refresh" content="10.0; url=file:///Users/codebx/Desktop/WiflySite/icenotify.html">
+		-->
+		<TITLE> Unit Sales ! </TITLE>
+		<SCRIPT type="text/javascript" src="jquery-1.4.4.min.js"></SCRIPT>
+
+		<!--
+		<SCRIPT type="text/javascript">
+			function sleep(milliSeconds) {
+				var startTime = new Date().getTime();
+				while (new Date().getTime() < startTime + milliSeconds);
+			}
+
+			function redirectUser() {
+				window.location = "iced.html";
+			}
+
+		</SCRIPT>
+		-->
+
+
+		<STYLE type="text/css">
+
+			BODY {
+				font-family: calibri; 
+				font-size: 15em;
+				font-weight: bold;
+				margin-top: 5%;
+				margin-bottom: 25%;
+				background-color: #00469b;
+				color: #FFFFFF;
+			}
+
+			#lastWeeksVal
+			{
+				font-size: 40pt;
+				margin-top: 5%;
+				color: #CCCCCC;
+				text-shadow: 1px 1px 1px #CCC;
+			}
+
+			#numberDisplay
+			{
+				background-image: -webkit-gradient(
+					linear,
+					left bottom,
+					left top,
+					color-stop(0.25, rgb(158,162,168)),
+					color-stop(0.63, rgb(201,204,214)),
+					color-stop(0.82, rgb(162,188,189))
+				);
+				background-image: -moz-linear-gradient(
+					center bottom,
+					rgb(158,162,168) 25%,
+					rgb(201,204,214) 63%,
+					rgb(162,188,189) 82%
+				);
+							
+				text-align: center; 
+				border-style: outset; 
+				border-width: 12px; 
+				border-color: #CCC; 
+				background-color: #88888A; 
+				border-radius: 28px; 
+				width: 90%
+			}
+
+
+		</STYLE>
+	</HEAD>
+
+	<BODY>
+
+		<!-- HTML5 audio tag - loads spin8.wav from current directory -->
+		<audio autoplay="autoplay">
+			<source src="spin8.wav" />
+		</audio>
+
+		<!-- <BR> -->
+
+		<!-- Create div tag with individual SPAN tags for each digit in number -->
+		<CENTER>
+			<DIV id="numberDisplay"> 
+				<SPAN id="num1" style="text-shadow: 12px 12px 12px #000">0</SPAN> 
+				<SPAN id="num2" style="text-shadow: 12px 12px 12px #000">0</SPAN> 
+				<SPAN id="num3" style="text-shadow: 12px 12px 12px #000">0</SPAN> 
+				<SPAN id="num4" style="text-shadow: 12px 12px 12px #000">0</SPAN>
+			</DIV>
+
+
+		</CENTER>
+
+		<!-- Placeholder audio tag for 'tada sound' which is accessed via javascript at the bottom -->
+		<audio id="soundHandle" style="display: none;"></audio>
+
+		<script>
+
+			// change this according to what the final value shown should be
+			var finalValue = "1013";
+
+			// change this to last week's value
+			var lastWeek = 952;
+
+			var differenceWeek = parseInt(finalValue, 10) - lastWeek;
+
+			// create array to hold each digit of random number
+			var numArray = new Array(3);
+
+			// loop random number generation (n) times
+			var counter = 24;
+
+			// runs function (function()) every xyz millisecs until interval is cleared
+			var intervalHandle = setInterval("generateValues()", 333);
+
+			// start random value at 0 (used for while() loop inside generateValues() function)
+			var numRand = 0;
+
+			// this will be the string value of the number, so we can split it into elements for our array
+			var strRand = "";
+
+			// hide the first digit until it's needed (for aesthetics)
+			$("#num1").hide();
+		</script>
+
+		<CENTER>
+			<DIV id="lastWeeksVal">
+
+				Last week's value: <SPAN id="lastVal"></SPAN><BR> 
+				Units signed since last week: <SPAN id="difference"></SPAN>
+
+				<SCRIPT>
+					$("#lastVal").text(lastWeek);
+					$("#lastVal").css("color", "#0089AB");
+					$("#lastVal").css("text-shadow", "2px 2px 2px #FFF");
+
+					$("#difference").text("...");
+					$("#difference").css("color", "#0088AB");
+					$("#difference").css("text-shadow", "2px 2px 2px #FFF");
+					
+				</SCRIPT>
+			</DIV>
+		</CENTER>
+
+		<SCRIPT>
+			function generateValues() 
+			{
+				// decrement counter
+				counter--;
+
+				// reset random number generated to 0
+				numRand = 0;
+
+				// while loop computes a new random number until one that is greater than last week's
+				// this is so the audience only sees the relevant values (i.e., hides values that this week's value couldn't be)
+				while (numRand < lastWeek) 
+				{
+					// generate a random number betwee 0 and 1100
+					numRand = Math.floor(Math.random() * 1100);
+				}
+
+				// convert the number generated into a string
+				strRand = numRand.toString();
+
+				// split the string into its individual characters and assign each character to its respective array element
+				numArray = strRand.split("");
+				
+				// if the value is greater than 1000, show all four digits...
+				// otherwise, hide the first digit so only three are visible...
+				if (numRand > 1000)
+				{
+					$("#num1").show();
+					$("#num1").text(numArray[0]);
+					$("#num2").text(numArray[1]);
+					$("#num3").text(numArray[2]);
+					$("#num4").text(numArray[3]);
+				}
+				else
+				{
+					$("#num1").hide();
+					$("#num2").text(numArray[0]);
+					$("#num3").text(numArray[1]);
+					$("#num4").text(numArray[2]);
+				}
+
+				// if we've hit (n) number of loop iterations, stop the loop and show the final value
+				if (counter <= 0)
+				{
+					clearInterval(intervalHandle);
+					finalizeValue();
+				}
+			}
+
+			function finalizeValue()
+			{
+				numArray = finalValue.split("");
+
+				if (finalValue < 1000)
+				{
+					$("#num1").hide();
+					$("#num2").text(numArray[0]);
+					$("#num3").text(numArray[1]);
+					$("#num4").text(numArray[2]);
+				}
+				else
+				{
+					$("#num1").show();
+					$("#num1").text(numArray[0]);
+					$("#num2").text(numArray[1]);
+					$("#num3").text(numArray[2]);
+					$("#num4").text(numArray[3]);
+				}
+
+				//$("#difference").show();
+				$("#difference").text(differenceWeek);
+
+				// access audio element with id soundHandle
+				soundHandle = document.getElementById('soundHandle');
+
+				if (parseInt(finalValue) != lastWeek)
+				{
+
+					// specify tada as sound when finalValue is different from lastWeek (i.e., more sales)
+					soundHandle.src = 'tada.wav';
+
+
+					$("#num1").css("color", "#00469b");
+					$("#num1").css("text-shadow", "12px 12px 12px #FFF");
+					$("#num2").css("color", "#00469b");
+					$("#num2").css("text-shadow", "12px 12px 12px #FFF");
+					$("#num3").css("color", "#00469b");
+					$("#num3").css("text-shadow", "12px 12px 12px #FFF");
+					$("#num4").css("color", "#00469b");
+					$("#num4").css("text-shadow", "12px 12px 12px #FFF");
+
+					$("#difference").text(differenceWeek);
+
+	
+				}
+				else
+				{
+					// specify sad trombone sound when no sales have been made
+					soundHandle.src = 'sad.wav';
+					$("#num1").css("color", "#FF0000");
+					$("#num1").css("text-shadow", "2px 2px 2px #55F");
+					$("#num2").css("color", "#FF0000");
+					$("#num2").css("text-shadow", "2px 2px 2px #55F");
+					$("#num3").css("color", "#FF0000");
+					$("#num3").css("text-shadow", "2px 2px 2px #55F");
+					$("#num4").css("color", "#FF0000");
+					$("#num4").css("text-shadow", "2px 2px 2px #55F");
+
+				}
+
+				// play specified sound
+				soundHandle.play();
+
+
+			}
+
+		</SCRIPT>
+
+	</BODY>
+</HTML>
+
+
